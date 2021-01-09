@@ -1,0 +1,21 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "nodemon ./server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "gps": "^0.6.0",
+    "gps-tracking": "^1.1.1",
+    "gpstracker": "0.0.4",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.6",
+    "socket.io": "^3.0.5",
+    "teltonika-parser": "0.0.15"
+  }
+}
