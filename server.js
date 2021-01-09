@@ -1,14 +1,30 @@
 const net = require('net')
 const Parser = require('teltonika-parser');
 const binutils = require('binutils64');
-const conn = require('./connection')
+// const conn = require('./connection')
+var firebase = require("firebase/app");
 const server = net.createServer();
+
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+    apiKey: "AIzaSyDX5qQAcYJzHqzgmMdkQhgRSuYOfR_33e0",
+    authDomain: "tcpip-d1dce.firebaseapp.com",
+    databaseURL: "https://tcpip-d1dce-default-rtdb.firebaseio.com",
+    projectId: "tcpip-d1dce",
+    storageBucket: "tcpip-d1dce.appspot.com",
+    messagingSenderId: "797341404546",
+    appId: "1:797341404546:web:6d11bae6abf5d476b3539b",
+    measurementId: "G-8593GKEYB2"
+};
+firebase.initializeApp(firebaseConfig);
+
+var database = firebase.database();
+
 
 server.on('connection', (socket) => {
     console.log('connection is made successfully!');
 
     socket.on('data', (data) => {
-        //{"IMEI":"","latitude":"","longitude":"","altitude":"","speed":"","angle":"","satellites":"","timestamp":""}
 
         console.log("data");
         console.log(JSON.parse(data.toString().trim()));
@@ -25,13 +41,9 @@ server.on('connection', (socket) => {
             satellite: obj.satellite
         }
 
-        conn.insert('avl', mData, (result) => {
-            if (result.status == 1) {
-                console.log('data inserted!')
-            } else {
-                console.log('data not inserted!' + result.message)
-            }
-        })
+        
+            firebase.database().ref('users/' + Date.now()).set(mData);
+          
 
     })
 
